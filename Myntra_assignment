@@ -68,19 +68,24 @@ public class Myntra {
 		
 		
 		Thread.sleep(3000);
+		//select Add to Bag
 		driver.findElement(By.xpath("//div[text()='ADD TO BAG']")).click();
 		Thread.sleep(3000);
+		//select Go to Bag
 		driver.findElement(By.xpath("//span[text()='GO TO BAG']")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//html")).click();
+		//Select and enter pincode
 		driver.findElement(By.xpath("//div[text()='ENTER PIN CODE']")).click();
 		Thread.sleep(3000);
 		driver.findElement(By.cssSelector("input[placeholder='Enter Pincode']")).sendKeys("600018");
 		Thread.sleep(3000);
 		driver.findElement(By.xpath("//div[text()='CHECK']")).click();
 		Thread.sleep(3000);
+		//Click on place order
 		driver.findElement(By.xpath("//div[text()='PLACE ORDER']")).click();
 		
+		//Verify whether Text displayed is valid
 		WebElement actual=driver.findElement(By.cssSelector("div[class='welcome-header"));
 		System.out.println(actual.getText());
 		String expectedout= "Login or Signup";
