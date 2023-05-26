@@ -1,0 +1,93 @@
+package Myntra;
+import org.openqa.selenium.chrome.*;
+
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.*;
+
+import org.testng.Assert;
+import org.testng.*;
+import org.testng.Reporter;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import dev.failsafe.internal.util.Assert;
+
+public class Myntra {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		//System.setProperty("webdriver.chrome.driver", "/Users/bala/Documents/Chromedriver/chromedriver_mac64/chromedriver");
+		WebDriver driver = new ChromeDriver();
+	
+		
+		driver.manage().window().maximize();
+		driver.get("https://www.myntra.com/");
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		
+		Actions a = new Actions(driver);
+		Thread.sleep(4000);
+		WebElement move= driver.findElement(By.xpath("//a[@href='/shop/men']"));
+		Thread.sleep(3000);
+		a.moveToElement(move).build().perform();
+		Thread.sleep(3000);
+		a.moveToElement(driver.findElement(By.linkText("Watches"))).click().build().perform();
+		Thread.sleep(3000);
+		
+		//Select white color
+		//driver.findElement(By.xpath("(//span[@data-colorhex='white'])[1]")).click();
+		driver.findElement(By.xpath("//ul/li[4]/label/span[@data-colorhex='white']")).click();
+		Thread.sleep(3000);
+		
+		//Low to high
+		a.moveToElement((driver.findElement(By.className("sort-sortBy")))).build().perform();
+		driver.findElement(By.xpath("//div/ul/li[6]/label[text()='Price: Low to High']")).click();
+		Thread.sleep(5000);
+		
+		//80% and above
+		driver.findElement(By.xpath(("//ul/li[8]/label[text()='80% and above']"))).click();
+		Thread.sleep(5000);
+		//Select first product
+		List<WebElement> li	= driver.findElements(By.className("img-responsive"));
+		li.get(1).click();
+		
+		
+		//Parent to child window
+		Set <String> window =driver.getWindowHandles();
+		Iterator<String> i =window.iterator();
+		String parent=i.next();
+		String child=i.next();
+		driver.switchTo().window(child);
+		
+		
+		
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[text()='ADD TO BAG']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//span[text()='GO TO BAG']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//html")).click();
+		driver.findElement(By.xpath("//div[text()='ENTER PIN CODE']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.cssSelector("input[placeholder='Enter Pincode']")).sendKeys("600018");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[text()='CHECK']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[text()='PLACE ORDER']")).click();
+		
+		WebElement actual=driver.findElement(By.cssSelector("div[class='welcome-header"));
+		System.out.println(actual.getText());
+		String expectedout= "Login or Signup";
+		Assert.assertEquals(actual.getText(),expectedout);
+		System.out.println("Expected is equal to actual - Assert is passed");
+		
+		
+	}
+
+}
